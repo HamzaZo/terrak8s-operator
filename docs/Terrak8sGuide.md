@@ -119,7 +119,7 @@ my-instance   Running     POSTGRES_9_6     192.168.0.12   9m
 4. Get details of your PostgreSql by running `kubectl describe pg -n demo`
 
 The output is similar to this:
-```
+```yaml
 Name:         my-instance
 Namespace:    demo
 Labels:       <none>

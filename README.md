@@ -42,7 +42,7 @@ A controller is a simple software loop, often called the 'reconcile loop', that 
 
 The resource creation process workflow as follows:
 * step 1:
-  - Developer or/and Ops creates the CR (a.k.a. custom resource) and k8s secrets as well. Secrets contain the access credentials of the tenant (a.k.a. GCP serviceAccount JSON key) and database users password.
+  - Developer or/and Ops creates the CR (a.k.a. custom resource) and k8s secrets as well. Secrets contain the access credentials of the project (a.k.a. GCP serviceAccount JSON key) and database users password.
 * step 2 & step 3 & step 4:
   - The Terrak8s controller watch CRD event types (Added, Updated, Deleted) in the background. When a relevant event occurs on CR reconcile cycle started.
   - The kubernetes API server forward the CRD request to the registered webhooks list (MutatingWebhook,ValidatingWebhook), by sending an Admission Review. MutatingWebhook sets default CRD parameters settings spec. Afterwards ValidatingWebhook decides to validate or not the request by returning an Admission Review response to k8s API.
