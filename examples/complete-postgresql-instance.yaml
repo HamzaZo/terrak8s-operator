@@ -1,0 +1,79 @@
+apiVersion: sql.terrak8s.io/v1alpha1
+kind: PostgreSql
+metadata:
+  name: my-instance
+  namespace: demo
+spec:
+  project:
+    name: my-project
+    region: europe-west1
+    zone: europe-west1-b
+  remoteState:
+    bucketName: bucket-nonprd
+    bucketPrefix: "dev/tfstate"
+  bucketConfig:
+    name: bucket-nonprd
+    project: my-project
+    storageClass: STANDARD
+    location: europe-west1
+    destroy: true
+    lifecycleRule:
+      action:
+        type: "Delete"
+      condition:
+        age: 3
+  databases:
+    - name: sample-db2
+      charset: UTF8
+      collation: en_US.UTF8
+      instance: my-instance
+      project: my-project
+    - name: sample-db1
+      charset: UTF8
+      collation: en_US.UTF8
+      instance: my-instance
+      project: my-project
+  users:
+    - name: user-1
+      password:
+        secretKeyRef:
+          name: cred-database
+          key: database-password1
+      instance: my-instance
+      project: my-project
+    - name: user-2
+      password:
+        secretKeyRef:
+          name: cred-database
+          key: database-password2
+      instance: my-instance
+      project: my-project
+  sqlInstance:
+    databaseVersion: POSTGRES_9_6
+    deletionProtection: false
+    project: my-project
+    region: europe-west1
+    name: my-instance
+    settings:
+      - machineType: db-f1-micro
+        availabilityType: ZONAL
+        diskType: PD_SSD
+        diskAutoresize: true
+        activationPolicy: ALWAYS
+        labels:
+          name: environment
+          value: dev
+        ipConfiguration:
+          ipv4Enabled: false
+          privateNetwork: "my-vpc"
+        databaseFlags:
+          - name: log_min_duration_statement
+            value: "3000"
+        locationPreference:
+          zone: europe-west1-b
+        backupConfiguration:
+          startTime: "21:30"
+          enabled: true
+        maintenanceWindow:
+          day: 7
+          hour: 4
