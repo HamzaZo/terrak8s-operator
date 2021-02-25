@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: controller-manager
-  namespace: webhook-operator
+  namespace: terrak8s-operator
   labels:
     control-plane: controller-manager
 spec:
@@ -33,11 +33,11 @@ spec:
             allowPrivilegeEscalation: false
           resources:
             limits:
-              cpu: 100m
-              memory: 30Mi
+              cpu: 500m
+              memory: 500Mi
             requests:
-              cpu: 100m
-              memory: 20Mi
+              cpu: 500m
+              memory: 500Mi
           livenessProbe:
             httpGet:
               path: /healthz

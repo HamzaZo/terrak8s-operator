@@ -1,0 +1,10 @@
+You have install {{ .Chart.Name }}, with success ðŸŽ‰
+
+Your release is named {{ .Release.Name }}, version: {{ .Chart.AppVersion }}.
+
+To learn more about the release, try:
+
+  $ helm status {{ .Release.Name }}
+  $ helm get manifest {{ .Release.Name }}
+
+Terrak8s

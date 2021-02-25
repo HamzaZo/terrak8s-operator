@@ -9,4 +9,4 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: default
-  namespace: webhook-operator
+  namespace: terrak8s-operator

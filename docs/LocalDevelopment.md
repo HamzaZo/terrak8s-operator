@@ -39,8 +39,8 @@ Modify the value of `caBundle` in both **MutatingWebhookConfiguration** and **Va
 
 **Note:** keeps in mind that you need to uncomment the webhook code
 ```shell
-$ kubectl create ns webhook-operator
-$ ./config/manifests/script.sh --service webhook-service --namespace webhook-operator --secret webhook-server-cert
+$ kubectl create ns terrak8s-operator
+$ ./config/manifests/script.sh 
 $ kubectl apply -f config/manifests/rbac
 $ kubectl apply -f config/manifests/webhook
 ```

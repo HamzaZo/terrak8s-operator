@@ -8,8 +8,8 @@ webhooks:
     name: webhook-mutate.terrak8s.io
     clientConfig:
       service:
-        name: webhook-service
-        namespace: webhook-operator
+        name: terrak8s-webhook-service
+        namespace: terrak8s-operator
         path: "/mutate-sql-terrak8s-io-v1alpha1-postgresql"
       caBundle: Cg==
     rules:
@@ -32,8 +32,8 @@ webhooks:
     clientConfig:
       caBundle: Cg==
       service:
-        name: webhook-service
-        namespace: webhook-operator
+        name: terrak8s-webhook-service
+        namespace: terrak8s-operator
         path: "/validate-sql-terrak8s-io-v1alpha1-postgresql"
     rules:
       - operations: ["CREATE","UPDATE"]

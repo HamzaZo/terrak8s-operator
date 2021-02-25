@@ -112,8 +112,8 @@ The creation process takes a few minutes, depending on the C4 network. (*hints* 
 
 ```shell
 $ kubectl get postgresql -n demo 
-NAME          PHASE      DATABASEVERSION   INSTANCEIP    AGE
-my-instance   Running     POSTGRES_9_6     192.168.0.12   9m
+NAME          PHASE      DATABASEVERSION   INSTANCEIP     AGE
+my-instance   Running     POSTGRES_9_6     192.168.0.12   9m30s
 ```
 
 4. Get details of your PostgreSql by running `kubectl describe pg -n demo`

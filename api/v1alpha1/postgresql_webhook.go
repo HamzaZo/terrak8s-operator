@@ -215,7 +215,7 @@ func (r *PostgreSql) validatePostgresInstance() error {
 func (r *PostgreSql) validatePostgresInstanceName() *field.Error {
 	if len(r.Name) > validation.DNS1035LabelMaxLength {
 		return field.Invalid(field.NewPath("metadata").Child("name"),
-			r.Name, "instance name must be less than 63 character")
+			r.Name, "Instance name must be less than 63 character")
 	}
 	return nil
 }
@@ -225,7 +225,7 @@ func (r *PostgreSql) validatePostgresInstanceSettings() *field.Error {
 	version := r.Spec.SqlInstance.DataBaseVersion
 	if !ContainsVersion(validateVersion, version) {
 		return field.Invalid(field.NewPath("spec").Child("sqlInstance").Child("databaseVersion"),
-			version, "invalid version, supported version are: POSTGRES_9_6, POSTGRES_10, POSTGRES_11, POSTGRES_12")
+			version, "Invalid version, supported version are: POSTGRES_9_6, POSTGRES_10, POSTGRES_11, POSTGRES_12")
 	}
 	return nil
 

@@ -50,8 +50,11 @@ func GenerateBucketTF(instance *sqlv1alpha1.PostgreSql, dir string) error {
 	if err != nil {
 		return err
 	}
-	out, err := util.GetPrettyJSON(p)
-	err = util.WriteToFile(out, dir, "provider.tf.json")
+	o, err := util.GetPrettyJSON(p)
+	if err != nil {
+		return err
+	}
+	err = util.WriteToFile(o, dir, "provider.tf.json")
 	if err != nil {
 		return err
 	}
@@ -123,11 +126,11 @@ func GenerateTFInstance(instance *sqlv1alpha1.PostgreSql, dir string, value map[
 	res = append(res, user...)
 	res = append(res, s...)
 
-	output, err := util.GetPrettyJSON(res)
+	final, err := util.GetPrettyJSON(res)
 	if err != nil {
 		return err
 	}
-	err = util.WriteToFile(output, dir, "main.tf.json")
+	err = util.WriteToFile(final, dir, "main.tf.json")
 	if err != nil {
 		return err
 	}
@@ -135,8 +138,7 @@ func GenerateTFInstance(instance *sqlv1alpha1.PostgreSql, dir string, value map[
 }
 
 func GenerateTFOutput(dir string) error {
-	output := RenderInstanceOutput()
-	err := util.WriteToFile(output, dir, "output.tf")
+	err := util.WriteToFile(RenderInstanceOutput(), dir, "output.tf")
 	if err != nil {
 		return err
 	}

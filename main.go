@@ -79,10 +79,10 @@ func main() {
 		os.Exit(1)
 	}
 	// TIPS: comment the webhook to be able to run the controller locally
-	//if err = (&sqlv1alpha1.PostgreSql{}).SetupWebhookWithManager(mgr); err != nil {
-	//	setupLog.Error(err, "unable to create webhook", "webhook", "PostgreSql")
-	//	os.Exit(1)
-	//}
+	if err = (&sqlv1alpha1.PostgreSql{}).SetupWebhookWithManager(mgr); err != nil {
+		setupLog.Error(err, "unable to create webhook", "webhook", "PostgreSql")
+		os.Exit(1)
+	}
 
 	// +kubebuilder:scaffold:builder
 
