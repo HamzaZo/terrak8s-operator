@@ -106,7 +106,7 @@ When you inspect the PostgreSqls in your namespace, the following fields are dis
 * `INSTANCEIP` displays the instance private ip for connection.
 * `AGE` displays the amount of time that the application has been running.
 
-The creation process takes a few minutes, depending on the C4 network. (*hints* use `watch -n 1 kubectl get pg -n demo` to track the progress of Postgresql creation)
+The creation process takes a few minutes. (*hints* use `watch -n 1 kubectl get pg -n demo` to track the progress of Postgresql creation)
 
 3. Run `kubectl get postgresql -n demo` again a few minutes later. The output is similar to this:
 
