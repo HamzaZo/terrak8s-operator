@@ -3,7 +3,7 @@ name: release
 on:
   push:
     tags:
-      - '*'
+      - 'v*'
 
 jobs:
   docker:
@@ -11,10 +11,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: fetch-tag
+      - name: Fetch-tag
         run: |
           - echo ::set-output release=TAG::$(shell git describe --exact-match --abbrev=0 2>/dev/null || echo "")
-        id: release
+        id: tag
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
       - name: Set up Docker Buildx
@@ -29,4 +29,14 @@ jobs:
         with:
           context: .
           push: true
-          tags: hamzazo/terrak8s-operator:${{ steps.release.outputs.TAG }}
+          tags: hamzazo/terrak8s-operator:${{ steps.tag.outputs.TAG }}
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.tag.outputs.TAG }}
+          release_name: Release - ${{ steps.tag.outputs.TAG }}
+        draft: false
+        prerelease: false
