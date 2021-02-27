@@ -12,7 +12,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Fetch-tag
-        run: echo ::set-output release=TAG::$(shell git describe --exact-match --abbrev=0 2>/dev/null || echo "")
+        run: echo ::set-output name=TAG::$(shell git describe --exact-match --abbrev=0 2>/dev/null || echo "")
         id: tag
       - name: Prepare helm chart
         run: |
