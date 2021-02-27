@@ -3,7 +3,7 @@ name: release
 on:
   push:
     tags:
-      - 'v*'
+      - '*.*'
 
 jobs:
   docker:
@@ -12,9 +12,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Fetch-tag
-        run: |
-          - echo ::set-output release=TAG::$(shell git describe --exact-match --abbrev=0 2>/dev/null || echo "")
+        run: echo ::set-output release=TAG::$(shell git describe --exact-match --abbrev=0 2>/dev/null || echo "")
         id: tag
+      - name: Prepare helm chart
+        run: |
+          sed -i -e 's/version: 0.1.0*/version: ${{ steps.tag.outputs.TAG }}/' chart/terrak8/Chart.yaml
+          sed -i -e 's/appVersion: 0.1.0*/appVersion: ${{ steps.tag.outputs.TAG }}/' chart/terrak8/Chart.yaml
+      - name: Lint Helm
+        uses: WyriHaximus/github-action-helm3@v2
+        with:
+          exec: helm lint chart/terrak8s
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
       - name: Set up Docker Buildx
