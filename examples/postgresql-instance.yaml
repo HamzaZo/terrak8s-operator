@@ -1,0 +1,43 @@
+apiVersion: sql.terrak8s.io/v1alpha1
+kind: PostgreSql
+metadata:
+  name: my-instance
+  namespace: demo
+spec:
+  project:
+    name: "my-project"
+  remoteState:
+    bucketName: "my-bucket"
+    bucketPrefix: "dev/tfstate"
+  databases:
+    - name: "sample-db1"
+    - name: "sample-db2"
+  users:
+    - name: "user-1"
+      password:
+        secretKeyRef:
+          name: cred-database
+          key: database-password-1
+    - name: "user-2"
+      password:
+        secretKeyRef:
+          name: cred-database
+          key: database-password-2
+  sqlInstance:
+    databaseVersion: "POSTGRES_9_6"
+    settings:
+      - machineType: "db-f1-micro"
+        labels:
+          name: "environment"
+          value: "dev01"
+        ipConfiguration:
+          privateNetwork: "my-vpc"
+        databaseFlags:
+          - name: "log_min_duration_statement"
+            value: "3000"
+        backupConfiguration:
+          startTime: "21:30"
+          enabled: true
+        maintenanceWindow:
+          day: 7
+          hour: 4

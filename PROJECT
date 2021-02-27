@@ -1,0 +1,7 @@
+domain: terrak8s.io
+repo: terrak8s-operator
+resources:
+- group: sql
+  kind: PostgreSql
+  version: v1alpha1
+version: "2"

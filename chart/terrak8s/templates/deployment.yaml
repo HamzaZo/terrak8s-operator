@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ printf "%s" .Values.controller.name }}
+  labels: {{- include "terrak8s.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  progressDeadlineSeconds: {{ .Values.deadlineSeconds }}
+  selector:
+    matchLabels: {{- include "terrak8s.selectorLabels" . | nindent 8 }}
+  template:
+    metadata:
+      labels: {{- include "terrak8s.selectorLabels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ printf "sa-%s" .Values.controller.name }}
+      containers:
+      - name: {{ .Values.controller.name }}
+        image: "hamzazo/terrak8s-operator:{{ .Chart.AppVersion }}"
+        imagePullPolicy: Always
+        command:
+        - /manager
+        args:
+        - --enable-leader-election
+        ports: {{- toYaml .Values.ports | nindent 8 }}
+        livenessProbe:
+        {{- toYaml .Values.livenessProbe | nindent 10 }}
+        readinessProbe:
+        {{- toYaml .Values.readinessProbe | nindent 10 }}
+        resources:
+        {{- toYaml .Values.resources | nindent 10 }}
+        {{- if .Values.extraMountVolumes }}
+          {{- $extraVolume := include "terrak8s.extraVolume.tpl" . }}
+        volumeMounts: {{- include "terrak8s.extraVolumeMount.tpl" . | nindent 8 }}
+      volumes: {{- $extraVolume | nindent 6 }}
+      {{- end }}

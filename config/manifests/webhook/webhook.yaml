@@ -1,0 +1,44 @@
+apiVersion: admissionregistration.k8s.io/v1
+kind: MutatingWebhookConfiguration
+metadata:
+  name: mutating-webhook-configuration
+webhooks:
+  - admissionReviewVersions:
+      - v1beta1
+    name: webhook-mutate.terrak8s.io
+    clientConfig:
+      service:
+        name: terrak8s-webhook-service
+        namespace: terrak8s-operator
+        path: "/mutate-sql-terrak8s-io-v1alpha1-postgresql"
+      caBundle: Cg==
+    rules:
+      - operations: ["CREATE","UPDATE"]
+        apiGroups: ["sql.terrak8s.io"]
+        apiVersions: ["v1alpha1"]
+        resources: ["postgresqls"]
+    sideEffects: None
+    failurePolicy: Fail
+
+---
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingWebhookConfiguration
+metadata:
+  name: validating-webhook-configuration
+webhooks:
+  - admissionReviewVersions:
+    - v1beta1
+    name: webhook-validator.terrak8s.io
+    clientConfig:
+      caBundle: Cg==
+      service:
+        name: terrak8s-webhook-service
+        namespace: terrak8s-operator
+        path: "/validate-sql-terrak8s-io-v1alpha1-postgresql"
+    rules:
+      - operations: ["CREATE","UPDATE"]
+        apiGroups: ["sql.terrak8s.io"]
+        apiVersions: ["v1alpha1"]
+        resources: ["postgresqls"]
+    sideEffects: None
+    failurePolicy: Fail
