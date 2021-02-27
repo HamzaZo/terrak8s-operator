@@ -7,7 +7,7 @@
 ## terrak8s-operator 
 
 Generate and manage Cloud SQL instances in a Kubernetes native way using [CustomResourceDefinitions](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions/). 
-Currently, terrak8s support **Cloud sql Postgres** on GCP, in the future releases we'll support Azure too, see [Roadmap](#roadmap). 
+Currently, terrak8s support **Cloud sql Postgres** on GCP. 
 
 ### Context 
 
@@ -66,10 +66,6 @@ See [Terrak8sGuide](docs/Terrak8sGuide.md) to learn more on how to use terrak8s 
 
 #### Development
 Get started with [Local development](docs/LocalDevelopment.md) guide.
-
-#### Roadmap:
-* Add support for GCP Cloud SQL instance Mysql.
-* Add support for Azure Database for PostgreSQL.
 
 #### Contributing
 We welcome any contributions from the community with open arms, If you're planning a new feature, please file an issue to discuss first.

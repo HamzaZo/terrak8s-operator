@@ -14,7 +14,7 @@ func GenerateProviderAndBackendTF(instance *sqlv1alpha1.PostgreSql, dir string) 
 	if err != nil {
 		return err
 	}
-	err = util.WriteToFile(output, dir, "provider.tf.json")
+	err = util.WriteToFile(output, dir, "backend.tf.json")
 	if err != nil {
 		return err
 	}
@@ -26,7 +26,7 @@ func GenerateProviderAndBackendTF(instance *sqlv1alpha1.PostgreSql, dir string) 
 	if err != nil {
 		return err
 	}
-	err = util.WriteToFile(out, dir, "backend.tf.json")
+	err = util.WriteToFile(out, dir, "provider.tf.json")
 	if err != nil {
 		return err
 	}

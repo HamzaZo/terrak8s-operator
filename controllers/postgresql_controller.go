@@ -52,6 +52,7 @@ const (
 var (
 	secretList kubeApiV1.SecretList
 	dir        string
+
 )
 
 // PostgreSqlReconciler reconciles a PostgreSql object
@@ -81,14 +82,20 @@ func (r *PostgreSqlReconciler) Reconcile(req ctrl.Request) (ctrl.Result, error) 
 		log.Error(err, "unable to fetch PostgreSql")
 		return ctrl.Result{}, err
 	}
-
 	if util.IsBeingDeleted(instance) {
-		if instance.Status.Phase == sqlv1alpha1.PhaseFailed {
+		if instance.Status.Phase == sqlv1alpha1.PhaseFailed || instance.Status.Phase == sqlv1alpha1.PhaseInitializing{
 			util.RemoveFinalizer(instance, Finalizer)
+			errC := util.HouseCleaning(dir)
+			if errC != nil {
+				errMsg := fmt.Sprintf("failed to do houseCleaning for instance %v/%v ", instance.Namespace, instance.Name)
+				r.Log.Error(errC, errMsg)
+				return ctrl.Result{Requeue: true}, nil
+			}
 			if errU := r.Update(context.Background(), instance); errU != nil {
 				return ctrl.Result{}, errU
 			}
 			return ctrl.Result{}, nil
+
 		} else {
 			errD := r.UpdateStatus(ctx, instance, sqlv1alpha1.PhaseDestroying)
 			if errD != nil {
