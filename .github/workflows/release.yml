@@ -16,8 +16,8 @@ jobs:
         id: tag
       - name: Prepare helm chart
         run: |
-          sed -i -e 's/version: 0.1.0*/version: ${{ steps.tag.outputs.TAG }}/' chart/terrak8/Chart.yaml
-          sed -i -e 's/appVersion: 0.1.0*/appVersion: ${{ steps.tag.outputs.TAG }}/' chart/terrak8/Chart.yaml
+          sed -i -e 's/version: 0.1.0*/version: ${{ steps.tag.outputs.TAG }}/' ./chart/terrak8/Chart.yaml
+          sed -i -e 's/appVersion: 0.1.0*/appVersion: ${{ steps.tag.outputs.TAG }}/' ./chart/terrak8/Chart.yaml
       - name: Lint Helm
         uses: WyriHaximus/github-action-helm3@v2
         with:
