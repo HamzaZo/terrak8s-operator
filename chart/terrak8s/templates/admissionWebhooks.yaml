@@ -1,11 +1,12 @@
 {{ $ca := genCA "terrak8s.io" 3720 }}
-  {{ $cn := printf "%s-svc.%s.svc" .Values.controller.name .Release.Namespace}}
-  {{- $altNames := list (printf "%s-svc.%s.svc" .Values.controller.name .Release.Namespace) (printf "%s-svc.%s" .Values.controller.name .Release.Namespace)}}
+  {{ $cn := printf "%s-svc.%s.svc" .Values.controller.name .Values.controller.namespace}}
+  {{- $altNames := list (printf "%s-svc.%s.svc" .Values.controller.name .Values.controller.namespace) (printf "%s-svc.%s" .Values.controller.name .Values.controller.namespace)}}
   {{ $cert := genSignedCert $cn nil $altNames 3720 $ca }}
 apiVersion: v1
 kind: Secret
 metadata:
   name: webhook-certs
+  namespace: {{ .Values.controller.namespace}}
   labels: {{- include "terrak8s.labels" . | nindent 4 }}
 type: kubernetes.io/tls
 data:
@@ -26,7 +27,7 @@ webhooks:
     clientConfig:
       service:
         name: {{ printf "%s-svc" .Values.controller.name }}
-        namespace: {{ .Release.Namespace }}
+        namespace: {{ .Values.controller.namespace}}
         path: "/mutate-sql-terrak8s-io-v1alpha1-postgresql"
       caBundle: {{ b64enc $ca.Cert}}
     rules:
@@ -50,7 +51,7 @@ webhooks:
     clientConfig:
       service:
         name: {{ printf "%s-svc" .Values.controller.name }}
-        namespace: {{ .Release.Namespace }}
+        namespace: {{ .Values.controller.namespace}}
         path: "/validate-sql-terrak8s-io-v1alpha1-postgresql"
       caBundle: {{ b64enc $ca.Cert}}
     rules:

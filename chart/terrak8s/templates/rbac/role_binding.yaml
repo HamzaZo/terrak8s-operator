@@ -9,4 +9,4 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: {{ printf "sa-%s" .Values.controller.name }}
-  namespace: {{ .Release.Namespace }}
+  namespace: {{ .Values.controller.namespace }}

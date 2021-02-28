@@ -60,6 +60,9 @@ The resource creation process workflow as follows:
   - Afterwards, a successful initialization of tfstate, terrk8s launches terraform apply to provision a cloud SQL instance.
 * step 11:
   - After a successful provisioning of the CRD, terrak8s updates the CRD status fields.
+
+### Getting started
+Check out the [InstallationGuide](docs/InstallationGuide.md) to deploy terrak8s components to your Kubernetes cluster.
   
 ### How to use terrak8s
 See [Terrak8sGuide](docs/Terrak8sGuide.md) to learn more on how to use terrak8s properly.
