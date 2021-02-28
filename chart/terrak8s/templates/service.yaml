@@ -3,6 +3,7 @@ kind: Service
 metadata:
   name: {{ printf "%s-svc" .Values.controller.name }}
   labels: {{- include "terrak8s.labels" . | nindent 4 }}
+  namespace: {{ .Values.controller.namespace}}
 spec:
   ports:
     - port: 443

@@ -2,6 +2,7 @@
 # This is a YAML-formatted file.
 controller:
   name: terrak8s-controller
+  namespace: terrak8s-operator
 
 deadlineSeconds: 400
 
